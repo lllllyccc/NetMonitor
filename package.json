@@ -1,0 +1,43 @@
+{
+  "name": "netmonitor",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "start \"NetProbe Hono\" npx tsx watch src/server/index.ts & start \"NetProbe Vite\" npx vite",
+    "dev:server": "tsx watch src/server/index.ts",
+    "dev:client": "vite",
+    "build": "npm run build:client && npm run build:server",
+    "build:client": "vite build",
+    "build:server": "tsc -p tsconfig.server.json",
+    "start": "node dist/server/server/index.js",
+    "lint": "eslint src/",
+    "typecheck": "tsc --noEmit -p tsconfig.server.json && tsc --noEmit -p tsconfig.client.json",
+    "lint:fix": "eslint src/ --fix",
+    "dev:clean": "powershell -NoProfile -Command \"$p=netstat -ano | Select-String ':3000.*LISTEN'; if($p){$id=$p.Line.Trim().Split()[-1]; Write-Host \\\"Killing PID $id on port 3000...\\\"; Stop-Process -Id $id -Force}\"",
+    "dev:killall": "taskkill /f /im node.exe 2>nul || exit 0"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.13.8",
+    "hono": "^4.7.4",
+    "pino": "^9.6.0",
+    "pino-pretty": "^13.0.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.13.4",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "concurrently": "^9.1.2",
+    "postcss": "^8.5.3",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.2.0",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0"
+  }
+}
